@@ -26,8 +26,11 @@ const smtp_server = new SMTPServer({
 
     banner: 'SMTP mock server, use UI to to check the actual message',
 
-    disabledCommands: ['AUTH', 'STARTTLS'],
+    disabledCommands: ['STARTTLS'],
 
+    onAuth(auth, session, callback) {
+        callback(null, { user: auth.username });
+    },
     onData(stream, session, callback) {
         //stream.pipe(process.stdout);
         simpleParser(stream, {skipHtmlToText: false, skipImageLinks: false, skipTextToHtml: false, skipTextLinks: false, keepCidLinks: true})
