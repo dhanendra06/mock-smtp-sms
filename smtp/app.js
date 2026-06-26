@@ -29,6 +29,10 @@ const forwarder = SMTP_FORWARD_HOST ? nodemailer.createTransport({
     host: SMTP_FORWARD_HOST,
     port: SMTP_FORWARD_PORT,
     secure: false,
+    auth: {
+        user: process.env.SMTP_FORWARD_USER || 'relay',
+        pass: process.env.SMTP_FORWARD_PASS || 'relay'
+    },
     tls: { rejectUnauthorized: false }
 }) : null;
 
